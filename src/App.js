@@ -50,7 +50,7 @@ function App() {
             <Counter store={store} />
           </div>
           <div className="col-md-6">
-            <DataList />
+            <DataList store={store}/>
           </div>
         </div>
         <div className="row">

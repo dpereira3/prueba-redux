@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class datalist extends Component {
-    state = {}
+    state = { data:[''] }
+    componentDidMount(){
+        this.props.store.subscribe(()=>{
+            this.setState({
+                data: this.props.store.getState().Data
+            })
+        })
+        this.setState({ data:this.props.Data })
+    }
     render() {
         return (
             <>
@@ -10,9 +18,12 @@ class datalist extends Component {
                     <div className="card-header">Data List</div>
                     <div className="card-body">
                         <h5 className="card-title">List of Data</h5>
-                        <p className="card-text">firest line</p>
-                        <p className="card-text">second line</p>
-                        <p className="card-text">therd line</p>
+                        {
+                            this.state.data.map(data => <p className="card-text" key={data}>
+                            {data}
+                            </p>)
+
+                        }
                     </div>
                 </div>
             </>
@@ -20,4 +31,8 @@ class datalist extends Component {
     }
 }
 
-export default datalist;
+const mapStateToProps = (state) => ({
+    Data:state.Data
+})
+
+export default connect(mapStateToProps) (datalist);
